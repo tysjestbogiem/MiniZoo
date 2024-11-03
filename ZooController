@@ -1,0 +1,296 @@
+package miniZoo;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+
+// class that controls the main functionality of the zoo: 
+// like adding animals, displaying information through menu
+public class ZooController {
+	
+	//private static final int MAX_SIZE = 10;
+
+	// List that holds all Animal objects added to the zoo
+	// enable shared access accros instances of ZooController
+	private static ArrayList<Animal> zooAnimals = new ArrayList<>();
+	
+	// static executes once when class is first loaded, so animals are autmoaticly added
+	// this is just for testing 
+	static {
+        zooAnimals.add(new Monkey("Julian", 2, 30.0f, HabitatType.FOREST, 50.0f, "Ooh Ooh Aah Aah", true));
+        zooAnimals.add(new Monkey("Sara", 2, 30.0f, HabitatType.FOREST, 50.0f, "Ooh Ooh Aah Aah", true));
+        zooAnimals.add(new Giraffe("Melman", 4, 280.0f, HabitatType.SAVANNAH, 250.0f, "Hum", "Acacia"));
+        zooAnimals.add(new Giraffe("SleepyRoom", 4, 350.0f, HabitatType.SAVANNAH, 250.0f, "Hum", "Acacia"));
+        zooAnimals.add(new Shark("Whittey", 0, 350.0f, HabitatType.OCEAN, 25000.0f, "Silent", 10));
+        zooAnimals.add(new Shark("Braian", 0, 270.0f, HabitatType.OCEAN, 25000.0f, "Silent", 10));
+        zooAnimals.add(new Shark("Stefan", 0, 200.0f, HabitatType.OCEAN, 25000.0f, "Silent", 10));
+        zooAnimals.add(new Shark("Blue", 0, 400.0f, HabitatType.OCEAN, 25000.0f, "Silent", 10));
+        zooAnimals.add(new Lobster("Reddy", 10, 43.0f, HabitatType.OCEAN, 300.0f, "Click", 150));
+        //zooAnimals.add(new Lobster("Karol", 10, 51.0f, HabitatType.OCEAN, 300.0f, "Click", 150));
+    }
+	
+
+
+    
+    //getter to retrive list of animals in zoo
+    public static ArrayList<Animal> getZooAnimals() {
+        return zooAnimals;
+    }
+	
+    
+	
+	// method to display menu and handle selection
+	public void showMenu() {
+		
+		Scanner scanner = new Scanner(System.in);
+		
+		
+		boolean quit = false;
+        int menuItem;
+
+        // Display menu
+        do {
+            System.out.println("Welcome to the Zoo Management System!");
+            System.out.println("Please choose an option:");
+            System.out.println("1. Add an animal");
+            System.out.println("2. Find out how many animals are currently in the zoo");
+            System.out.println("3. Find out how many animals there are of a specified type");
+            System.out.println("4. Find out what noise a specified animal makes");
+            System.out.println("5. Find out whether a specified animal lives in water");
+            System.out.println("6. Display all animal information");
+            System.out.println("7. Exit");
+
+            // Get user input
+            System.out.print("Enter your choice: ");
+            menuItem = scanner.nextInt();
+
+            // Handle menu options
+            switch (menuItem) {
+                case 1:
+                    System.out.println("Adding an animal...");
+                    addAnimals(scanner); //calls method 
+                    break;
+                case 2:
+                    System.out.println("Finding out how many animals are currently in the zoo...");
+                    numberOfAnimals(); 
+                    break;
+                case 3:
+                    System.out.println("Finding out how many animals there are of a specified type...");
+                    //typeOfAnimals();
+                    break;
+                case 4:
+                    System.out.println("Finding out what noise a specified animal makes...");
+                    //animalNoise();
+                    break;
+                case 5:
+                    System.out.println("Finding out whether a specified animal lives in water...");
+                    //waterAnimals();
+                    break;
+                case 6:
+                	System.out.println("Display all animal information");
+                	//displayAllInformations();
+                	break;
+                case 7:
+                    quit = true;
+                    System.out.println("Exiting the Zoo Management System. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please choose a valid option.");
+            }
+            System.out.println(); // Blank line for better readability
+        } while (!quit);
+
+        scanner.close();
+    }
+	
+	// handles ading animals with specific details
+	private void addAnimals(Scanner scanner) {
+		
+		/**
+		 * public boolean addAnimal(Animal animal) {
+	    System.out.println("Current zoo size: " + zooAnimals.size()); // Debug statement
+
+	    if (zooAnimals.size() >= 10) { 
+	        System.out.println("Zoo is at full capacity. Cannot add more animals.");
+	        return false;
+	    } else {
+	        zooAnimals.add(animal);
+	        System.out.println(animal.getName() + " added to the zoo.");
+	        System.out.println("New zoo size: " + zooAnimals.size()); // Debug statement
+	        return true;
+	    }
+	}
+		 */
+		
+		if (zooAnimals.size() >= 10) {
+			System.out.println("Option not avaiable.");
+			System.out.println("Zoo is at full capacity. Cannot add more animals.");
+		} else {
+			System.out.println("Select the type of animal to add:");
+		    System.out.println("1. Monkey");
+		    System.out.println("2. Giraffe");
+		    System.out.println("3. Shark");
+		    System.out.println("4. Lobster");
+
+		    int choice = scanner.nextInt();
+		    scanner.nextLine(); // Consume newline
+
+		    // Gather common attributes
+		    Animal basicInfo = basicAnimalInfo(scanner);
+
+		    // Specific inputs based on choice
+		    switch (choice) {
+		        case 1:
+		            addMonkey(basicInfo, scanner);
+		            break;
+		        case 2:
+		            addGiraffe(basicInfo, scanner);
+		            break;
+		        case 3:
+		            addShark(basicInfo, scanner);
+		            break;
+		        case 4:
+		            addLobster(basicInfo, scanner);
+		            break;
+		        default:
+		            System.out.println("Invalid choice. Animal not added.");
+		    }
+		}
+	}
+			
+
+	    
+	 // this is method that gather all general questions specific for every animal 
+	    private Animal basicAnimalInfo (Scanner scanner) {
+	        System.out.print("Enter name: ");
+	        String name = scanner.nextLine();
+	        
+	        
+	        // add error proffing
+	        System.out.print("Enter number of legs: ");
+	        int numberOfLegs = scanner.nextInt();
+
+	        System.out.print("Enter size (float): ");
+	        float size = scanner.nextFloat();
+
+	        // Habitat type validation loop
+	        HabitatType habitatType = null;
+	        while (habitatType == null) {
+	            System.out.print("Enter habitat type (FOREST/SAVANNAH/OCEAN/RAINFOREST): ");
+	            String habitatInput = scanner.next().toUpperCase();
+	            try {
+	                habitatType = HabitatType.valueOf(habitatInput);
+	            } catch (IllegalArgumentException e) {
+	                System.out.println("Invalid habitat type. Please enter a valid type.");
+	            }
+	        }
+	        
+	        System.out.print("Enter habitat size (float): ");
+	        float habitatSize = scanner.nextFloat();
+	        
+	        System.out.print("Enter noise: ");
+	        scanner.nextLine(); // Extra newline
+	        String noise = scanner.nextLine();
+		
+	        
+	        return new Animal (name, numberOfLegs, size, habitatType, habitatSize, noise);
+	    }
+	    
+	    private void addMonkey(Animal basicAnimalInfo, Scanner scanner) {
+	    	
+	    	System.out.println("Does Monkey needs climbing space? (TRUE/FALSE)");
+	    	boolean isClimbing = scanner.nextBoolean();
+	    	
+	    	Monkey monkey = new Monkey(
+	    			basicAnimalInfo.getName(),
+	    			basicAnimalInfo.getNumberOfLegs(),
+	    			basicAnimalInfo.getSize(),
+	    			basicAnimalInfo.habitatType(),
+	    			basicAnimalInfo.getHabitatSize(),
+	    			basicAnimalInfo.getNoise(),
+	    			isClimbing
+	    			);
+	    	
+	    	zooAnimals.add(monkey);
+	    	
+	    	System.out.println("Monkey: " + basicAnimalInfo.getName() + " is added successfully!");
+	    }
+	    
+	    
+	    private void addGiraffe(Animal basicAnimalInfo, Scanner scanner) {
+	    	
+	    	System.out.print("Enter preferred tree type: ");
+	        scanner.nextLine(); // Consume newline
+	        String favouriteTreeType = scanner.nextLine();
+	    	
+	    	Giraffe giraffe = new Giraffe(
+	    			basicAnimalInfo.getName(),
+	    			basicAnimalInfo.getNumberOfLegs(),
+	    			basicAnimalInfo.getSize(),
+	    			basicAnimalInfo.habitatType(),
+	    			basicAnimalInfo.getHabitatSize(),
+	    			basicAnimalInfo.getNoise(),
+	    			favouriteTreeType
+	    			);
+	    	
+	    	zooAnimals.add(giraffe);
+	    	
+	    	System.out.println("Giraffe: " + basicAnimalInfo.getName() + " is added successfully!");
+	    }
+	    
+	    private void addShark(Animal basicAnimalInfo, Scanner scanner) {
+	    	
+	    	System.out.println("Enter water temperature (float)");
+	        int waterTemperature = scanner.nextInt();
+	    	
+	    	Shark shark = new Shark(
+	    			basicAnimalInfo.getName(),
+	    			basicAnimalInfo.getNumberOfLegs(),
+	    			basicAnimalInfo.getSize(),
+	    			basicAnimalInfo.habitatType(),
+	    			basicAnimalInfo.getHabitatSize(),
+	    			basicAnimalInfo.getNoise(),
+	    			waterTemperature
+	    			);
+	    	
+	    	zooAnimals.add(shark);
+	    	
+	    	System.out.println("Shark: " + basicAnimalInfo.getName() + " is added successfully!");
+	    }
+	    
+	    private void addLobster(Animal basicAnimalInfo, Scanner scanner) {
+	    	
+	    	System.out.print("Enter water depth (float): ");
+	        float waterDepth = scanner.nextFloat();
+	    	
+	        Lobster lobster = new Lobster(
+	    			basicAnimalInfo.getName(),
+	    			basicAnimalInfo.getNumberOfLegs(),
+	    			basicAnimalInfo.getSize(),
+	    			basicAnimalInfo.habitatType(),
+	    			basicAnimalInfo.getHabitatSize(),
+	    			basicAnimalInfo.getNoise(),
+	    			waterDepth
+	    			);
+	    	
+	        zooAnimals.add(lobster);
+	        
+	    	System.out.println("Lobster: " + basicAnimalInfo.getName() + " is added successfully!");
+	    }
+	    
+	    
+	    private void numberOfAnimals() {
+	    	
+	    	System.out.println("There are: " + ZooController.getZooAnimals().size() + " animals in out Mini Zoo");
+	    	
+	    }
+		
+	}
+	
+
+
+
+
+
+
