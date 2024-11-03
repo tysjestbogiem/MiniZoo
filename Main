@@ -1,0 +1,16 @@
+package miniZoo;
+
+
+public class Main {
+
+	public static void main(String[] args) {
+
+
+		// Call the Controller to show menu
+        ZooController zooController = new ZooController();
+        zooController.showMenu();
+
+
+	}
+
+}
