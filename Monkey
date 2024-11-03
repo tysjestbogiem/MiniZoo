@@ -1,0 +1,25 @@
+package miniZoo;
+
+/** Class: Monkeys
+ *  Contains attrubutes that are only specific for Monkeys.
+ *  This class extends the Animal superclass and inherits its attributes.
+ */
+
+
+public class Monkey extends Animal {
+	
+	// attribute specific for Monkeys
+	private boolean climbingSpace;
+	
+	// constructor to create Monkey instance
+	public Monkey(String name, int numberOfLegs, float size, HabitatType habitatType, float habitatSize, String noise, boolean isClimbing) {
+		super(name, numberOfLegs, size, habitatType, habitatSize, noise);
+	}
+
+	public boolean isClimbingSpace() {
+		return false;
+	}
+
+	
+
+}
