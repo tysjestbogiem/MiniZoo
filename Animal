@@ -1,0 +1,62 @@
+package miniZoo;
+
+/** Class: Animal
+ *  contains all informations that are specifici for ALL animals
+ *  @author Martyna
+ */
+
+public class Animal {
+	
+	// atributes for all animals
+	private String name;
+	private int numberOfLegs;
+	private float size;
+	private HabitatType habitatType;
+	private float habitatSize;
+	private String noise;
+	
+	// constructor for all things that will not change
+	public Animal (String name, int numberOfLegs, float size, HabitatType habitatType,
+			float habitatSize, String noise) {
+		this.name = name;
+		this.numberOfLegs = numberOfLegs;
+		this.habitatType = habitatType;
+		this.habitatSize = habitatSize;
+		this.noise = noise;
+	}
+	
+	// method, what acces we are granting
+	// getter
+	public String getName() {
+		return name;
+	}
+	
+	public int getNumberOfLegs() {
+		return numberOfLegs;
+	}
+	
+	public float getSize() {
+		return size;
+	}
+	
+	// setter, animal size can change in future
+	public void setSize(float newSize) {
+		size = newSize;
+	}
+	
+	public HabitatType habitatType() {
+		return habitatType;
+	}
+	
+	public float getHabitatSize() {
+		return habitatSize;
+	}
+	
+	public String getNoise() {
+		return noise;
+	}
+	
+	
+	
+
+}
