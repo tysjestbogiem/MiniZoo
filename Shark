@@ -1,0 +1,25 @@
+package miniZoo;
+
+/** Class: Shark
+ *  Contains attrubutes that are only specific for Shark.
+ *  This class extends the Animal superclass and inherits its attributes.
+ */
+
+public class Shark extends Animal {
+	
+	// specific attributes just for Shark
+	private int waterTemperature;
+
+	// constructor to create Shark instance
+	public Shark(String name, int numberOfLegs, float size, HabitatType habitatType, float habitatSize, String noise, int waterTemperature) {
+		super(name, numberOfLegs, size, habitatType, habitatSize, noise);
+		
+		this.waterTemperature = waterTemperature;
+	}
+	
+	//getter
+	public int getWaterTemperature() {
+		return waterTemperature;
+	}
+	
+}
