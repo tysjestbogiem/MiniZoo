@@ -1,0 +1,33 @@
+package miniZoo;
+
+/** Class: Giraffe
+ *  Contains attrubutes that are only specific for Giraffe.
+ *  This class extends the Animal superclass and inherits its attributes.
+ */
+
+
+public class Giraffe extends Animal{
+	
+	// Giraffe attribute, its favourite tree to eat
+	private String favouriteTreeType;
+
+	// constructor to create Giraffe instance
+	public Giraffe(String name, int numberOfLegs, float size, HabitatType habitatType, float habitatSize,
+			String noise, String favouriteTreeType) {
+		super(name, numberOfLegs, size, habitatType, habitatSize, noise);
+		
+		
+		this.favouriteTreeType = favouriteTreeType;
+	}
+
+	// getter
+	public String getFavouriteTreeType() {
+		return favouriteTreeType;
+	}
+
+	// setter because possibly might change?
+	public void setFavouriteTreeType(String newFavouriteTreeType) {
+		this.favouriteTreeType = newFavouriteTreeType;
+	}
+
+}
